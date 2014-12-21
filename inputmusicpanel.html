@@ -37,26 +37,16 @@
 	//draw treble stave
 	for(i=0; i<5; i++)
 	{
-		context.beginPath();
 		y = 100 + (i*16);
-	    context.moveTo(0, y);
-	    context.lineTo(400, y);
-	    context.stroke();
+	    drawNoteLine(context, y, false)
 	}
 	//draw middle C
-	context.beginPath();
-	y = 180;
-    context.moveTo(180, y);
-    context.lineTo(220, y);
-    context.stroke();
+	drawNoteLine(context, 180, true)
     //draw bass stave
 	for(i=0; i<5; i++)
 	{
-		context.beginPath();
 		y = 196 + (i*16);
-	    context.moveTo(0, y);
-	    context.lineTo(400, y);
-	    context.stroke();
+	    drawNoteLine(context, y, false)
 	}
 	//draw note
 	//scale context horizontally
@@ -76,6 +66,18 @@
       context.fillStyle = grd;
 	context.fill();
 	//context.stroke();
+
+	function drawNoteLine(context, y, short)
+	{
+		context.beginPath();
+		if(short)
+			{ xStart = 180; xEnd=220;}
+		else
+			{ xStart = 0; xEnd=400;}
+	    context.moveTo(xStart, y);
+	    context.lineTo(xEnd, y);
+	    context.stroke();
+	}
 </script>
 
 </body>
