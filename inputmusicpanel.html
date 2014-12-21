@@ -1,38 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-	    <link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<title>singtherightnote</title>
+	<link media="all" type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
     <!-- Latest compiled and minified JavaScript -->
     <script src="http://rustystylus.co.uk/js/jquery.js"></script>
 
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 
-	</head>
+</head>
+
 <body>
     <div class="container">
                         
             <div class="col-md-4">
             </div>
             <div class="col-md-4">  
-				<canvas id="myCanvas" width="400" height="600"	style="border:1px solid #c3c3c3;">
+				<canvas id="musicCanvas" width="400" height="600"	style="border:1px solid #c3c3c3;">
 				Your browser does not support the HTML5 canvas tag.
 				</canvas>
 			</div>
             <div class="col-md-4">
             </div>
+    </div>
+            
 <script>
-var c = document.getElementById("myCanvas");
-var context = c.getContext("2d");
-context.fillStyle = "#000000";
+	var c = document.getElementById("musicCanvas");
+	var context = c.getContext("2d");
+	context.fillStyle = "#000000";
 
-      // scale context horizontally
-      context.scale(3, 2);
 
-context.beginPath();
-//.arc(x, y, radius, startAngle, endAngle)
-context.arc(75, 75, 4, 0, 2*Math.PI, false);
-context.fill();
-//context.stroke();
+	//draw staves
+	context.beginPath();
+    context.moveTo(0, 150);
+    context.lineTo(400, 150);
+    context.stroke();
+
+	//draw note
+	//scale context horizontally
+	context.scale(3, 2);
+
+	context.beginPath();
+	//.arc(x, y, radius, startAngle, endAngle)
+	context.arc(75, 75, 4, 0, 2*Math.PI, false);
+
+	  // create radial gradient
+      var grd = context.createRadialGradient(2, 2, 10, 3, 3, 10);
+      // white
+      grd.addColorStop(0, '#FFFFFF');
+      // black
+      grd.addColorStop(1, '#000000');
+
+      context.fillStyle = grd;
+	context.fill();
+	//context.stroke();
 </script>
 
 </body>
