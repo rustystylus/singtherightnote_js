@@ -12,16 +12,20 @@
 
 <body>
     <div class="container">
-                        
-            <div class="col-md-4">
-            </div>
-            <div class="col-md-4">  
-				<canvas id="musicCanvas" width="400" height="600"	style="border:1px solid #c3c3c3;">
-				Your browser does not support the HTML5 canvas tag.
-				</canvas>
-			</div>
-            <div class="col-md-4">
-            </div>
+            <div class="row">
+            	<h1>singtherightnote</h1>
+            </div>  
+            <div class="row">          
+	            <div class="col-md-4">
+	            </div>
+	            <div class="col-md-4">  
+					<canvas id="musicCanvas" width="400" height="400"	style="border:1px solid #c3c3c3;">
+					Your browser does not support the HTML5 canvas tag.
+					</canvas>
+				</div>
+	            <div class="col-md-4">
+	            </div>
+        	</div>
     </div>
             
 <script>
@@ -30,12 +34,30 @@
 	context.fillStyle = "#000000";
 
 
-	//draw staves
+	//draw treble stave
+	for(i=0; i<5; i++)
+	{
+		context.beginPath();
+		y = 100 + (i*16);
+	    context.moveTo(0, y);
+	    context.lineTo(400, y);
+	    context.stroke();
+	}
+	//draw middle C
 	context.beginPath();
-    context.moveTo(0, 150);
-    context.lineTo(400, 150);
+	y = 180;
+    context.moveTo(180, y);
+    context.lineTo(220, y);
     context.stroke();
-
+    //draw bass stave
+	for(i=0; i<5; i++)
+	{
+		context.beginPath();
+		y = 196 + (i*16);
+	    context.moveTo(0, y);
+	    context.lineTo(400, y);
+	    context.stroke();
+	}
 	//draw note
 	//scale context horizontally
 	context.scale(3, 2);
