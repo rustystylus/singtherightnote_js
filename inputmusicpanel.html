@@ -7,6 +7,8 @@
     <script src="http://rustystylus.co.uk/js/jquery.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
+    <script src="js/inputmusicpanel.js" type="text/javascript"></script>
 
 </head>
 
@@ -67,17 +69,6 @@
 	context.fill();
 	//context.stroke();
 
-	function drawNoteLine(context, y, short)
-	{
-		context.beginPath();
-		if(short)
-			{ xStart = 180; xEnd=220;}
-		else
-			{ xStart = 0; xEnd=400;}
-	    context.moveTo(xStart, y);
-	    context.lineTo(xEnd, y);
-	    context.stroke();
-	}
 </script>
 
 </body>
