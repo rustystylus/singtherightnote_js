@@ -1,9 +1,39 @@
 function MusicPanel () {
-    this.noteInput = 40;
-    this.noteOutput = 40;
+	this.windowLeft = 0;
+	this.windowRight = 400;
+
+	this.ledgerLineLeft = 150;
+	this.ledgerLineRight = 270;
+
     this.middleC = 40;
     this.middleCYPosition = 90;
+
+    this.noteInput = 40;
+    this.noteOutput = 40;
+
+    this.inputNoteColor = "#0000FF";
+    this.outputNoteColor = "#000000";    
+
+    this.rangeLow = 36;
+    this.rangeHigh = 42;
+    this.rangeColor = "#99FF99";
+
 }
+
+MusicPanel.prototype.drawPanel = 
+	function (context)
+	{
+	
+	/*	
+		this.drawLedgerLines();
+		this.drawClefs();
+		*/
+		this.drawRange(context);
+		/*
+		this.drawInputNote();
+		this.drawOutputNote();
+	*/
+	}
 
 MusicPanel.prototype.setInputNote = function(note)
 	{
@@ -14,6 +44,15 @@ MusicPanel.prototype.setOutputNote = function(note)
 	{
 		this.noteOutput = note;
 	} 
+
+
+MusicPanel.prototype.setRange = function(noteLow, noteHigh)
+	{
+		this.rangeLow = noteLow;
+		this.rangeHigh = noteHigh;
+		//redraw();
+	}
+
 MusicPanel.prototype.drawInputNote = function(context)
 	{
 		this.drawNote(context, 0);
@@ -29,7 +68,6 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 		//draw note
 		//scale context horizontally
 		
-
 		context.beginPath();
 		// create radial gradient
 		//var grd = context.createRadialGradient(2, 2, 10, 150, 150, 10);
@@ -37,17 +75,17 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 		{
 			// black
 			//grd.addColorStop(1, '#0000FF');
-			context.strokeStyle='#0000FF';
+			context.strokeStyle = this.outputNoteColor;
 			//.arc(x, y, radius, startAngle, endAngle)
-			context.arc(55, this.middleCYPosition + ((this.noteOutput-this.middleC)* 8), 4, 0, 2*Math.PI, false);
+			context.arc(55, this.middleCYPosition + ((this.noteOutput-this.middleC)* 4), 4, 0, 2*Math.PI, false);
 		}
 		else
 		{
 			// blue
 			//grd.addColorStop(1, '#000000');
-			context.strokeStyle='#FF0000';
+			context.strokeStyle = this.inputNoteColor;
 			//.arc(x, y, radius, startAngle, endAngle)
-			context.arc(85, this.middleCYPosition + ((this.noteInput-this.middleC)* 8), 4, 0, 2*Math.PI, false);
+			context.arc(85, this.middleCYPosition + ((this.noteInput-this.middleC)* 4), 4, 0, 2*Math.PI, false);
 		}
 		// white
 		//grd.addColorStop(0, '#FFFFFF');
@@ -61,10 +99,20 @@ MusicPanel.prototype.drawNoteLine =
 	{
 		context.beginPath();
 		if(short)
-			{ xStart = 150; xEnd=270;}
+			{ xStart = this.ledgerLineLeft; xEnd=this.ledgerLineRight;}
 		else
-			{ xStart = 0; xEnd=400;}
+			{ xStart = this.windowLeft; xEnd=this.windowRight;}
 	    context.moveTo(xStart, y);
 	    context.lineTo(xEnd, y);
 	    context.stroke();
+	}
+
+MusicPanel.prototype.drawRange = 
+	function (context)
+	{
+		xStart = 2;
+		xEnd = 4;
+		context.fillStyle = this.rangeColor;
+		context.fillRect(xStart, this.middleCYPosition + ((this.rangeLow-this.middleC)* 4), xEnd,  
+						this.middleCYPosition + ((this.rangeHigh-this.middleC)* 4));
 	}

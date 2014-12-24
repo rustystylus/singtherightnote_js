@@ -19,6 +19,11 @@
             </div>  
             <div class="row">          
 	            <div class="col-md-4">
+					<select name=select1 onchange='OnRangeChange(this.form.selectRange);'>
+						<option>Suprano</option>
+						<option>Tenor</option>
+						<option>Bass</option>
+					</select>
 	            </div>
 	            <div class="col-md-4">  
 					<canvas id="musicCanvas" width="400" height="400"	style="border:1px solid #c3c3c3;">
@@ -53,27 +58,27 @@
 	context.scale(3, 2);
 	mPanel.setInputNote(38);
 	mPanel.drawInputNote(context);
-	mPanel.setOutputNote(42);
+	mPanel.setOutputNote(40);
 	mPanel.drawOutputNote(context);
 		//draw note
 	//scale context horizontally
-/*	context.scale(3, 2);
-
-	context.beginPath();
-	//.arc(x, y, radius, startAngle, endAngle)
-	context.arc(75, 75, 4, 0, 2*Math.PI, false);
-'
+/*	
 	// create radial gradient
 	var grd = context.createRadialGradient(2, 2, 10, 3, 3, 10);
-	// white
-	grd.addColorStop(0, '#FFFFFF');
-	// black
-	grd.addColorStop(1, '#000000');
 
 	context.fillStyle = grd;
 	context.fill();
-	//context.stroke();
 */
+
+	mPanel.drawPanel(context);
+function OnRangeChange(dropdown)
+{
+    var myindex  = dropdown.selectedIndex;
+    var SelValue = dropdown.options[myindex].value;
+    //var baseURL  = <Some value based on SelValue>
+    //top.location.href = baseURL; 
+    return true;
+}
 </script>
 
 </body>
