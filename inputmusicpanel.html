@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     
     <script src="js/musicpanel.js" type="text/javascript"></script>
-
+	<script src="js/noteplayer.js" type="text/javascript"></script>
 </head>
 
 <body>
@@ -19,11 +19,14 @@
             </div>  
             <div class="row">          
 	            <div class="col-md-4">
-					<select name=select1 onchange='OnRangeChange(this.form.selectRange);'>
+	            	<form>
+					<select name=selectRange onchange='OnRangeChange(this.form.selectRange);'>
 						<option>Suprano</option>
 						<option>Tenor</option>
 						<option>Bass</option>
 					</select>
+					<button id="playnote"  class="btn btn-default" onclick='PlayNote()'>Play Note</button>
+					</form>
 	            </div>
 	            <div class="col-md-4">  
 					<canvas id="musicCanvas" width="400" height="400"	style="border:1px solid #c3c3c3;">
@@ -36,26 +39,21 @@
     </div>
             
 <script>
+var noteplayer = new NotePlayer();
+var mPanel = new MusicPanel();
+
+window.onload=function() 
+{
+	initialise();
+
+};	
 	var c = document.getElementById("musicCanvas");
 	var context = c.getContext("2d");
 	context.fillStyle = "#000000";
-	mPanel = new MusicPanel();
+	
+	mPanel.drawPanel(context);
 
-	//draw treble stave
-	for(i=0; i<5; i++)
-	{
-		y = 100 + (i*16);
-	    mPanel.drawNoteLine(context, y, false)
-	}
-	//draw middle C
-	mPanel.drawNoteLine(context, 180, true)
-    //draw bass stave
-	for(i=0; i<5; i++)
-	{
-		y = 196 + (i*16);
-	    mPanel.drawNoteLine(context, y, false)
-	}
-	context.scale(3, 2);
+	
 	mPanel.setInputNote(38);
 	mPanel.drawInputNote(context);
 	mPanel.setOutputNote(40);
@@ -70,14 +68,50 @@
 	context.fill();
 */
 
-	mPanel.drawPanel(context);
+	
+
 function OnRangeChange(dropdown)
 {
     var myindex  = dropdown.selectedIndex;
     var SelValue = dropdown.options[myindex].value;
+    switch(myindex)
+    {
+	    case 1:
+	    	mPanel.setRange(context,32,36);
+	    	break;
+	    case 2:
+	    	mPanel.setRange(context,36,40);
+	    	break;
+	    default:
+	    	mPanel.setRange(context,40,42);
+	    	break;
+	}
     //var baseURL  = <Some value based on SelValue>
     //top.location.href = baseURL; 
     return true;
+}
+
+function initialise()
+{
+
+	window.addEventListener('load', init, false);
+    function init() {
+      try {
+        // Fix up for prefixing
+        window.AudioContext = window.AudioContext||window.webkitAudioContext;
+        audioContext = new AudioContext();
+        alert('Web Audio API is supported in this browser');
+      }
+      catch(e) {
+        alert('Web Audio API is not supported in this browser');
+      }
+    }
+	
+}
+function PlayNote()
+{
+	noteplayer.playNote()
+
 }
 </script>
 

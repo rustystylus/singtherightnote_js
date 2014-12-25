@@ -23,10 +23,10 @@ function MusicPanel () {
 MusicPanel.prototype.drawPanel = 
 	function (context)
 	{
-	
-	/*	
-		this.drawLedgerLines();
-		this.drawClefs();
+		context.scale(1, 1);
+		context.clearRect ( 0 , 0 , 400, 400 );
+		this.drawLedgerLines(context);
+	/*	this.drawClefs();
 		*/
 		this.drawRange(context);
 		/*
@@ -46,11 +46,11 @@ MusicPanel.prototype.setOutputNote = function(note)
 	} 
 
 
-MusicPanel.prototype.setRange = function(noteLow, noteHigh)
+MusicPanel.prototype.setRange = function(context,noteLow, noteHigh)
 	{
 		this.rangeLow = noteLow;
 		this.rangeHigh = noteHigh;
-		//redraw();
+		this.drawPanel(context);
 	}
 
 MusicPanel.prototype.drawInputNote = function(context)
@@ -62,12 +62,29 @@ MusicPanel.prototype.drawOutputNote = function(context)
 	{
 		this.drawNote(context, 1);
 	}	
-
+MusicPanel.prototype.drawLedgerLines = function(context) 
+	{
+		context.fillStyle = "#000000";
+		//draw treble stave
+		for(i=0; i<5; i++)
+		{
+			y = 100 + (i*16);
+		    this.drawNoteLine(context, y, false)
+		}
+		//draw middle C
+		this.drawNoteLine(context, 180, true)
+	    //draw bass stave
+		for(i=0; i<5; i++)
+		{
+			y = 196 + (i*16);
+		    this.drawNoteLine(context, y, false)
+		}
+	}
 MusicPanel.prototype.drawNote = function(context, outputFlag) 
 	{
 		//draw note
 		//scale context horizontally
-		
+		context.scale(3, 2);
 		context.beginPath();
 		// create radial gradient
 		//var grd = context.createRadialGradient(2, 2, 10, 150, 150, 10);
@@ -93,11 +110,13 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 		//context.fillStyle = grd;
 		context.stroke();
 		//context.fill();
+		context.scale(1,1);
 	}
+
 MusicPanel.prototype.drawNoteLine = 
 	function (context, y, short)
 	{
-		context.beginPath();
+		//context.beginPath();
 		if(short)
 			{ xStart = this.ledgerLineLeft; xEnd=this.ledgerLineRight;}
 		else
