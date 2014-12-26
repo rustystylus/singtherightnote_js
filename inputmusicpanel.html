@@ -10,6 +10,10 @@
     
     <script src="js/musicpanel.js" type="text/javascript"></script>
 	<script src="js/noteplayer.js" type="text/javascript"></script>
+	<script src="js/sing.js" type="text/javascript"></script>
+	<script>
+		var sing = new Sing();
+	</script>
 </head>
 
 <body>
@@ -25,7 +29,9 @@
 						<option>Tenor</option>
 						<option>Bass</option>
 					</select>
-					<button id="playnote"  class="btn btn-default" onclick='PlayNote()'>Play Note</button>
+					<button id="playnote"  class="btn btn-default" onclick='sing.playNote();'>Play Note</button>
+					<button id="nextnote"  class="btn btn-default" onclick='sing.nextNote();'>Next Note</button>
+
 					</form>
 	            </div>
 	            <div class="col-md-4">  
@@ -38,37 +44,20 @@
         	</div>
     </div>
             
+
 <script>
-var noteplayer = new NotePlayer();
-var mPanel = new MusicPanel();
+var c = document.getElementById("musicCanvas");
+var context = c.getContext("2d");
+	
+sing.musicPanel.drawPanel(context);
 
 window.onload=function() 
 {
-	initialise();
+		initialise();
+}	
 
-};	
-	var c = document.getElementById("musicCanvas");
-	var context = c.getContext("2d");
-	context.fillStyle = "#000000";
-	
-	mPanel.drawPanel(context);
 
-	
-	mPanel.setInputNote(38);
-	mPanel.drawInputNote(context);
-	mPanel.setOutputNote(40);
-	mPanel.drawOutputNote(context);
-		//draw note
-	//scale context horizontally
-/*	
-	// create radial gradient
-	var grd = context.createRadialGradient(2, 2, 10, 3, 3, 10);
 
-	context.fillStyle = grd;
-	context.fill();
-*/
-
-	
 
 function OnRangeChange(dropdown)
 {
@@ -76,14 +65,16 @@ function OnRangeChange(dropdown)
     var SelValue = dropdown.options[myindex].value;
     switch(myindex)
     {
+    	case 0:
+    		sing.musicPanel.setRange(context, 32, 40);
+    		break;
 	    case 1:
-	    	mPanel.setRange(context,32,36);
+	    	sing.musicPanel.setRange(context,40, 48);
 	    	break;
 	    case 2:
-	    	mPanel.setRange(context,36,40);
+	    	sing.musicPanel.setRange(context,48, 56);
 	    	break;
 	    default:
-	    	mPanel.setRange(context,40,42);
 	    	break;
 	}
     //var baseURL  = <Some value based on SelValue>
@@ -105,14 +96,15 @@ function initialise()
       catch(e) {
         alert('Web Audio API is not supported in this browser');
       }
-    }
-	
+    }	
 }
+/*
 function PlayNote()
 {
-	noteplayer.playNote()
-
+	sing.playNote();
 }
+*/
+
 </script>
 
 </body>

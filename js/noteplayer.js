@@ -1,12 +1,16 @@
 function NotePlayer () 
 {
 
-    this.noteToPlay = 40;
+    this.outputNote = 0;
     this.instrument = 0;
     this.chord = false;
     this.noteDuration = 500; //ms
 }
 
+NotePlayer.prototype.setOutputNote = function(note)
+    {
+        this.outputNote = note;
+    }
 NotePlayer.prototype.setNote = function(note)
     {
         this.noteToPlay = note;
@@ -20,7 +24,7 @@ NotePlayer.prototype.playNote = function()
         oscillator.connect(this.audioContext.destination);
         oscillator.start(0);
         */
-       alert('PlayNote');
+       alert('PlayNote '+ this.outputNote);
     }
 
 NotePlayer.prototype.setInstrument = function(instrument)

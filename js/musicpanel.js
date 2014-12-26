@@ -9,10 +9,11 @@ function MusicPanel () {
     this.middleCYPosition = 90;
 
     this.noteInput = 40;
-    this.noteOutput = 40;
+    this.outputNote = 0;
 
+    this.noteRadius =4;
     this.inputNoteColor = "#0000FF";
-    this.outputNoteColor = "#000000";    
+    this.outputNoteColor = "#FF0000";    
 
     this.rangeLow = 36;
     this.rangeHigh = 42;
@@ -23,29 +24,30 @@ function MusicPanel () {
 MusicPanel.prototype.drawPanel = 
 	function (context)
 	{
-		context.scale(1, 1);
+		
 		context.clearRect ( 0 , 0 , 400, 400 );
+		context.fillStyle = "#000000";
+
 		this.drawLedgerLines(context);
 		this.drawClefs(context);
 		this.drawRange(context);
-	/*
-		this.drawInputNote();
-		this.drawOutputNote();
-	*/
+
+		this.setInputNote(38);
+		this.drawInputNote(context);
+
+		this.drawOutputNote(context);
+
 	}
 
 MusicPanel.prototype.setInputNote = function(note)
 	{
 		this.noteInput = note;
 	}
-
 MusicPanel.prototype.setOutputNote = function(note)
 	{
-		this.noteOutput = note;
-	} 
-
-
-MusicPanel.prototype.setRange = function(context,noteLow, noteHigh)
+		this.outputNote = note;
+	}
+MusicPanel.prototype.setRange = function(context, noteLow, noteHigh)
 	{
 		this.rangeLow = noteLow;
 		this.rangeHigh = noteHigh;
@@ -63,7 +65,7 @@ MusicPanel.prototype.drawOutputNote = function(context)
 	}	
 MusicPanel.prototype.drawLedgerLines = function(context) 
 	{
-		context.fillStyle = "#000000";
+		context.strokeStyle = "#000000";
 		//draw treble stave
 		for(i=0; i<5; i++)
 		{
@@ -94,18 +96,21 @@ MusicPanel.prototype.drawClefs = function(context)
 MusicPanel.prototype.drawNote = function(context, outputFlag) 
 	{
 		//draw note
+		// save state
+        context.save();
 		//scale context horizontally
 		context.scale(3, 2);
 		context.beginPath();
 		// create radial gradient
 		//var grd = context.createRadialGradient(2, 2, 10, 150, 150, 10);
+
 		if(outputFlag==1)
 		{
 			// black
 			//grd.addColorStop(1, '#0000FF');
 			context.strokeStyle = this.outputNoteColor;
 			//.arc(x, y, radius, startAngle, endAngle)
-			context.arc(55, this.middleCYPosition + ((this.noteOutput-this.middleC)* 4), 4, 0, 2*Math.PI, false);
+			context.arc(50, this.middleCYPosition + ((this.outputNote-this.middleC)* 4), this.noteRadius, 0, 2*Math.PI, false);
 		}
 		else
 		{
@@ -113,7 +118,7 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 			//grd.addColorStop(1, '#000000');
 			context.strokeStyle = this.inputNoteColor;
 			//.arc(x, y, radius, startAngle, endAngle)
-			context.arc(85, this.middleCYPosition + ((this.noteInput-this.middleC)* 4), 4, 0, 2*Math.PI, false);
+			context.arc(70, this.middleCYPosition + ((this.noteInput-this.middleC)* 4), this.noteRadius, 0, 2*Math.PI, false);
 		}
 
 /*	
@@ -124,13 +129,15 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 		//context.fillStyle = grd;
 		context.stroke();
 		//context.fill();
-		context.scale(1,1);
+		context.restore();
+
 	}
 
 MusicPanel.prototype.drawNoteLine = 
 	function (context, y, short)
 	{
-		//context.beginPath();
+		context.fillStyle = "#000000";
+		context.beginPath();
 		if(short)
 			{ xStart = this.ledgerLineLeft; xEnd=this.ledgerLineRight;}
 		else
