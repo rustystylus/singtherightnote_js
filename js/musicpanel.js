@@ -26,10 +26,9 @@ MusicPanel.prototype.drawPanel =
 		context.scale(1, 1);
 		context.clearRect ( 0 , 0 , 400, 400 );
 		this.drawLedgerLines(context);
-	/*	this.drawClefs();
-		*/
+		this.drawClefs(context);
 		this.drawRange(context);
-		/*
+	/*
 		this.drawInputNote();
 		this.drawOutputNote();
 	*/
@@ -80,6 +79,18 @@ MusicPanel.prototype.drawLedgerLines = function(context)
 		    this.drawNoteLine(context, y, false)
 		}
 	}
+
+MusicPanel.prototype.drawClefs = function(context) 
+	{
+		trebleClefImg = new Image();
+	    trebleClefImg.src = 'Images/treble_clef.png';
+	    context.drawImage(trebleClefImg, 15, 70);
+		bassClefImg = new Image();
+	    bassClefImg.src = 'Images/bass_clef.png';
+	    context.drawImage(bassClefImg, 15, 197);
+
+	}
+
 MusicPanel.prototype.drawNote = function(context, outputFlag) 
 	{
 		//draw note
@@ -104,9 +115,12 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 			//.arc(x, y, radius, startAngle, endAngle)
 			context.arc(85, this.middleCYPosition + ((this.noteInput-this.middleC)* 4), 4, 0, 2*Math.PI, false);
 		}
-		// white
-		//grd.addColorStop(0, '#FFFFFF');
 
+/*	
+	// create radial gradient
+	var grd = context.createRadialGradient(2, 2, 10, 3, 3, 10);
+
+*/
 		//context.fillStyle = grd;
 		context.stroke();
 		//context.fill();
