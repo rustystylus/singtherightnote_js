@@ -29,8 +29,8 @@
 						<option>Tenor</option>
 						<option>Bass</option>
 					</select>
-					<button id="playnote"  class="btn btn-default" onclick='sing.playNote();'>Play Note</button>
-					<button id="nextnote"  class="btn btn-default" onclick='sing.nextNote();'>Next Note</button>
+					<button id="playnote"  class="btn btn-default" onclick='sing.playNote();return false;'>Play Note</button>
+					<button id="nextnote"  class="btn btn-default" onclick='NextNote();return false;'>Next Note</button>
 
 					</form>
 	            </div>
@@ -80,6 +80,13 @@ function OnRangeChange(dropdown)
     //var baseURL  = <Some value based on SelValue>
     //top.location.href = baseURL; 
     return true;
+}
+
+function NextNote()
+{
+	sing.nextNote();
+	sing.musicPanel.drawPanel(context);
+	
 }
 
 function initialise()
