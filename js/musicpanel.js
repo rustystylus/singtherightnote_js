@@ -110,7 +110,7 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 			//grd.addColorStop(1, '#0000FF');
 			context.strokeStyle = this.outputNoteColor;
 			//.arc(x, y, radius, startAngle, endAngle)
-			context.arc(50, this.middleCYPosition + ((this.outputNote-this.middleC)* 4), this.noteRadius, 0, 2*Math.PI, false);
+			context.arc(50, this.middleCYPosition - ((this.outputNote-this.middleC)* 4), this.noteRadius, 0, 2*Math.PI, false);
 		}
 		else
 		{
@@ -118,7 +118,7 @@ MusicPanel.prototype.drawNote = function(context, outputFlag)
 			//grd.addColorStop(1, '#000000');
 			context.strokeStyle = this.inputNoteColor;
 			//.arc(x, y, radius, startAngle, endAngle)
-			context.arc(70, this.middleCYPosition + ((this.noteInput-this.middleC)* 4), this.noteRadius, 0, 2*Math.PI, false);
+			context.arc(70, this.middleCYPosition - ((this.noteInput-this.middleC)* 4), this.noteRadius, 0, 2*Math.PI, false);
 		}
 
 /*	
